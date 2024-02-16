@@ -119,7 +119,7 @@ if image is not None:
         # Rotate original image for text extraction
         rotated_ori = rotate_image(norm_img, -max_angle)
         
-
+        reader = load_model() #load model
         # detect text on rotated & corrected image
         result2, bbox2 = detect_text(rotated_image, thre = 0.00001)
         
