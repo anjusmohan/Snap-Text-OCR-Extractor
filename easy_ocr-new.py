@@ -90,7 +90,9 @@ def detect_text(image, thre = 0):
             result.append(text)   
             #print(text, bbox)     
     return result, max_box
-    
+
+reader = load_model() #load model
+
 if image is not None:
 
     input_image = Image.open(image) #read image
@@ -107,28 +109,28 @@ if image is not None:
 
     with st.spinner("Text Extraction in progress!!!!...	:running: 	:running: "):
         
-        reader = load_model() #load model
+        
         # detect text on original image
         result, bbox = detect_text(gray, thre = 0)
         # Determine angle for orientation correction 
-        max_angle = calculate_rotation_angle(bbox)
-        print("Rotation angle: ", max_angle)
+        #max_angle = calculate_rotation_angle(bbox)
+        #print("Rotation angle: ", max_angle)
         # Rotate gray image for text extraction
-        rotated_image = rotate_image(gray, -max_angle)
+        #rotated_image = rotate_image(gray, -max_angle)
         # Rotate original image for text extraction
-        rotated_ori = rotate_image(norm_img, -max_angle)
+        #rotated_ori = rotate_image(norm_img, -max_angle)
         
-        reader = load_model() #load model
+        #reader = load_model() #load model
         # detect text on rotated & corrected image
-        result2, bbox2 = detect_text(rotated_image, thre = 0.00001)
+        #result2, bbox2 = detect_text(rotated_image, thre = 0.00001)
         
         st.write("The extracted texts: ")
         st.write(result) # display text
         
         # Write extracted text with bounding boxes in image
-        for i in range(len(result2)):
-            cv2.rectangle(rotated_ori, (int(np.array(bbox2[i][0])[0]), int(np.array(bbox2[i][0])[1])), (int(np.array(bbox2[i][2])[0]), int(np.array(bbox2[i][2])[1])), (239, 26, 255), 6)
-            cv2.putText(rotated_ori, result2[i], (int(np.array(bbox2[i][0])[0]), int(np.array(bbox2[i][0])[1])-25), cv2.FONT_HERSHEY_COMPLEX, 1.0, (184, 26, 255), 3)
+        for i in range(len(result)):
+            cv2.rectangle(rotated_ori, (int(np.array(bbox[i][0])[0]), int(np.array(bbox[i][0])[1])), (int(np.array(bbox[i][2])[0]), int(np.array(bbox[i][2])[1])), (239, 26, 255), 6)
+            cv2.putText(rotated_ori, result[i], (int(np.array(bbox[i][0])[0]), int(np.array(bbox[i][0])[1])-25), cv2.FONT_HERSHEY_COMPLEX, 1.0, (184, 26, 255), 3)
         
         #display rotated image with identified text and bounding boxes
         st.write("Corrected Image with extracted text and bounding boxes")
