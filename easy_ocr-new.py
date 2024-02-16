@@ -91,8 +91,6 @@ def detect_text(image, thre = 0):
             #print(text, bbox)     
     return result, max_box
     
-reader = load_model() #load model
-
 if image is not None:
 
     input_image = Image.open(image) #read image
@@ -108,7 +106,8 @@ if image is not None:
     gray = cv2.cvtColor(norm_img, cv2.COLOR_BGR2GRAY) 
 
     with st.spinner("Text Extraction in progress!!!!...	:running: 	:running: "):
-
+        
+        reader = load_model() #load model
         # detect text on original image
         result, bbox = detect_text(gray, thre = 0)
         # Determine angle for orientation correction 
