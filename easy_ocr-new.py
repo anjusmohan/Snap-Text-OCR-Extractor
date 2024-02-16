@@ -64,7 +64,7 @@ def calculate_rotation_angle(bounding_boxes):
     return math.degrees(average_angle)
 
 def load_model(): 
-    reader = ocr.Reader(['en'], gpu=True, model_storage_directory='.')
+    reader = ocr.Reader(['en'], gpu=False)
     return reader 
 
 # Define the function to detect text in an image
